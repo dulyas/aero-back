@@ -1,0 +1,348 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "fullstacktodo",
+    "description": "My fullstacktodo",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/signup": {
+      "post": {
+        "description": "Register New User",
+        "parameters": [
+          {
+            "name": "email",
+            "description": "user email",
+            "type": "string",
+            "required": true,
+            "in": "query"
+          },
+          {
+            "name": "password",
+            "description": "user password",
+            "type": "string",
+            "required": true,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User with Refresh and Acess tokens",
+            "schema": {
+              "$ref": "#/definitions/UserWithTokens"
+            }
+          }
+        }
+      }
+    },
+    "/signin": {
+      "post": {
+        "description": "User Login",
+        "parameters": [
+          {
+            "name": "email",
+            "description": "user email",
+            "type": "string",
+            "required": true,
+            "in": "query"
+          },
+          {
+            "name": "password",
+            "description": "user password",
+            "type": "string",
+            "required": true,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User with Refresh and Acess tokens",
+            "schema": {
+              "$ref": "#/definitions/UserWithTokens"
+            }
+          }
+        }
+      }
+    },
+    "/signin/new_token": {
+      "post": {
+        "description": "update refresh token from refresh token in cookies",
+        "responses": {
+          "200": {
+            "description": "User with Refresh and Acess tokens",
+            "schema": {
+              "$ref": "#/definitions/UserWithTokens"
+            }
+          }
+        }
+      }
+    },
+    "/logout": {
+      "get": {
+        "description": "logout from refresh token in cookies",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/info": {
+      "get": {
+        "description": "get User Id from refresh token in cookies",
+        "responses": {
+          "200": {
+            "id": "1",
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/file/upload/": {
+      "post": {
+        "description": "uploadFile with multer",
+        "parameters": [
+          {
+            "name": "file",
+            "description": "file for upload",
+            "type": {
+              "fieldname": "string",
+              "originalname": "string",
+              "encoding": "string",
+              "mimetype": "string",
+              "destination": "string",
+              "filename": "string",
+              "path": "string",
+              "size": "number"
+            },
+            "required": true,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File data",
+            "schema": {
+              "$ref": "#/definitions/File"
+            }
+          }
+        }
+      }
+    },
+    "/file/list/": {
+      "get": {
+        "description": "uploadFile with multer",
+        "parameters": [
+          {
+            "name": "page",
+            "description": "page of list",
+            "type": "string",
+            "required": false,
+            "in": "query"
+          },
+          {
+            "name": "list_size",
+            "description": "size of list",
+            "type": "string",
+            "required": false,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Files data",
+            "schema": {
+              "$ref": "#/definitions/Files"
+            }
+          }
+        }
+      }
+    },
+    "/file/delete/{id}": {
+      "delete": {
+        "description": "uploadFile with multer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "id for delete candidate"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/file/{id}": {
+      "get": {
+        "description": "get file info for id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "file id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File",
+            "schema": {
+              "$ref": "#/definitions/File"
+            }
+          }
+        }
+      }
+    },
+    "/file/update/{id}": {
+      "put": {
+        "description": "uploadFile with multer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "file id"
+          },
+          {
+            "name": "file",
+            "description": "file for update",
+            "type": {
+              "fieldname": "string",
+              "originalname": "string",
+              "encoding": "string",
+              "mimetype": "string",
+              "destination": "string",
+              "filename": "string",
+              "path": "string",
+              "size": "number"
+            },
+            "required": true,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File data",
+            "schema": {
+              "$ref": "#/definitions/File"
+            }
+          }
+        }
+      }
+    },
+    "/file/download/{id}": {
+      "get": {
+        "description": "get file info for id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "file id for download"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File",
+            "schema": {
+              "$ref": "#/definitions/File"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "1"
+        },
+        "email": {
+          "type": "string",
+          "example": "tester@test.com"
+        }
+      }
+    },
+    "Users": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/User"
+      }
+    },
+    "UserWithTokens": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/User"
+        },
+        "refreshToken": {
+          "type": "string",
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlckB0ZXN0LmNvbSIsImlkIjoxLCJpYXQiOjE2ODc2MjcyMDIsImV4cCI6MTY5MDIxOTIwMn0.kFZHqXCfnlOjhipw7UuVnTlgkXE21jk1U5oQ4bGgloE"
+        },
+        "accessToken": {
+          "type": "string",
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlckB0ZXN0LmNvbSIsImlkIjoxLCJpYXQiOjE2ODc2MjcyMDIsImV4cCI6MTY5MDIxOTIwMn0.kFZHqXCfnlOjhipw7UuVnTlgkXE21jk1U5oQ4bGgloE"
+        }
+      }
+    },
+    "File": {
+      "type": "object",
+      "properties": {
+        "fieldname": {
+          "type": "string",
+          "example": "filedata"
+        },
+        "originalname": {
+          "type": "string",
+          "example": "VR_0001.jpg"
+        },
+        "encoding": {
+          "type": "string",
+          "example": "7bit"
+        },
+        "mimetype": {
+          "type": "string",
+          "example": "image/jpeg"
+        },
+        "destination": {
+          "type": "string",
+          "example": "uploads"
+        },
+        "filename": {
+          "type": "string",
+          "example": "b88b970a926a250c17a5b962a4ace5c3"
+        },
+        "path": {
+          "type": "string",
+          "example": "uploads\\b88b970a926a250c17a5b962a4ace5c3"
+        },
+        "size": {
+          "type": "number",
+          "example": 3209055
+        }
+      }
+    },
+    "Files": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/File"
+      }
+    }
+  }
+}
