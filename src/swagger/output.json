@@ -71,7 +71,23 @@
     },
     "/signin/new_token": {
       "post": {
-        "description": "update refresh token from refresh token in cookies",
+        "description": "update refresh token from refresh token",
+        "parameters": [
+          {
+            "name": " ",
+            "description": "user refreshToken",
+            "type": "string",
+            "required": true,
+            "in": "query"
+          },
+          {
+            "name": "refreshToken",
+            "description": "user refreshToken",
+            "type": "string",
+            "required": true,
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "description": "User with Refresh and Acess tokens",
@@ -84,7 +100,7 @@
     },
     "/logout": {
       "get": {
-        "description": "logout from refresh token in cookies",
+        "description": "logout from refresh token",
         "responses": {
           "default": {
             "description": ""
@@ -94,7 +110,7 @@
     },
     "/info": {
       "get": {
-        "description": "get User Id from refresh token in cookies",
+        "description": "get User Id from refresh token ",
         "responses": {
           "200": {
             "id": "1",
