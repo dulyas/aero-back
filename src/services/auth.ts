@@ -1,4 +1,4 @@
-import { User } from "@/models"
+import { User, Token } from "@/models"
 import bcrypt from 'bcrypt'
 import UserDto from "@/dtos/user-dto"
 import { generateTokens, saveToken, removeToken, validateRefreshToken, findToken } from "./token"
@@ -74,15 +74,21 @@ export const login = async (loginString: string, password: string): Promise<User
 
 }
 
-export const logout = async (refreshToken: string) :Promise<number> => {
-    const token = await removeToken(refreshToken)
+export const logout = async (id: number) :Promise<number> => {
+
+    const token = await Token.query().where({user_id: id}).delete()
+
+    // const token = await removeToken(refreshToken)
     return token
 }
 
 export const refresh = async (refreshToken: string): Promise<UserWithTokens> => {
     if (!refreshToken) throw ApiError.UnauthorizedError()
     const userData: UserDto | null = validateRefreshToken(refreshToken)
-    const tokenFromDb = findToken(refreshToken)
+    const tokenFromDb = await findToken(refreshToken)
+
+    console.log('userData', userData)
+    console.log('tokenFromDb', tokenFromDb)
 
     if (!userData || !tokenFromDb) {
         throw ApiError.UnauthorizedError()

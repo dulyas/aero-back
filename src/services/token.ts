@@ -56,11 +56,12 @@ export const validateAccessToken = (token: string): UserDto | null => {
 
 export const validateRefreshToken = (token: string): UserDto | null => {
     try {
-        const userData = jwt.verify(token, config.jwt.access_secret)
+        const userData = jwt.verify(token, config.jwt.refresh_secret)
 
         return userData as UserDto
         
     } catch (e) {
+        console.log(e)
         return null
     }
 }

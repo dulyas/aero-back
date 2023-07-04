@@ -51,23 +51,29 @@ router.post('/signin', (req: Request, res: Response, next: NextFunction) => {
 })
 
 router.post('/signin/new_token', (req: Request, res: Response, next: NextFunction) => {
-    // #swagger.description = 'update refresh token from refresh token in cookies'
+    // #swagger.description = 'update refresh token from refresh token'
+    /* #swagger.parameters['refreshToken'] = {
+    description: 'user refreshToken',
+    type: 'string',
+    required: true
+    } */
     /* #swagger.responses[200] = {
     description: 'User with Refresh and Acess tokens',
     schema: { $ref: '#/definitions/UserWithTokens' }
     } */
+
     refresh(req, res, next)
 })
 
 // router.get('/user/', getUsers)
 
 router.get('/logout', authMiddleware, (req: Request, res: Response, next: NextFunction) => {
-    // #swagger.description = 'logout from refresh token in cookies'
+    // #swagger.description = 'logout from refresh token'
     logout(req, res, next)
 })
 
 router.get('/info', authMiddleware, (req: Request, res: Response, next: NextFunction) => {
-    // #swagger.description = 'get User Id from refresh token in cookies'
+    // #swagger.description = 'get User Id from refresh token '
     /* #swagger.responses[200] = {
         id: '1'
     } */

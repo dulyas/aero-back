@@ -21,10 +21,10 @@ export const registration = async (req: Request, res: Response, next: NextFuncti
         const {email, password, phone} = req.body
 
         const userData = await authService.registration(email, password, phone)
-        res.cookie('refreshToken', userData.refreshToken, {
-            maxAge: +config.jwt.refresh_expiration || 360000,
-            httpOnly: true
-        })
+        // res.cookie('refreshToken', userData.refreshToken, {
+        //     maxAge: +config.jwt.refresh_expiration || 360000,
+        //     httpOnly: true
+        // })
         return res.json(userData)
     } catch (e) {
         next(e)
@@ -38,10 +38,10 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         const {id, password} = req.body
         const userData = await authService.login(id, password)
 
-        res.cookie('refreshToken', userData.refreshToken, {
-            maxAge: +config.jwt.refresh_expiration || 360000,
-            httpOnly: true
-        })
+        // res.cookie('refreshToken', userData.refreshToken, {
+        //     maxAge: +config.jwt.refresh_expiration || 360000,
+        //     httpOnly: true
+        // })
         return res.json(userData)
     } catch (e){
 
@@ -53,9 +53,15 @@ export const logout = async (req: Request, res: Response, next: NextFunction) =>
 
     try {
         // console.log(req)
-        const {refreshToken} = req.cookies
-        const token = await authService.logout(refreshToken)
-        res.clearCookie('refreshToken')
+        // const {refreshToken} = req.cookies
+
+        const {user} = req
+
+        if (!user) throw ApiError.UnauthorizedError()
+        // console.log(user)
+
+        const token = await authService.logout(user.id)
+        // res.clearCookie('refreshToken')
         return res.json(token)
     } catch (e){
         next(e)
@@ -66,13 +72,14 @@ export const refresh = async (req: Request, res: Response, next: NextFunction) =
 
 
     try {
-        const {refreshToken} = req.cookies
-        // console.log('refreshtoken',refreshToken)
+        // const {refreshToken} = req.cookies
+        const {refreshToken} = req.body
+
         const userData = await authService.refresh(refreshToken)
-        res.cookie('refreshToken', userData.refreshToken, {
-            maxAge: +config.jwt.refresh_expiration || 360000,
-            httpOnly: true
-        })
+        // res.cookie('refreshToken', userData.refreshToken, {
+        //     maxAge: +config.jwt.refresh_expiration || 360000,
+        //     httpOnly: true
+        // })
         return res.json(userData)
     } catch (e){
         next(e)

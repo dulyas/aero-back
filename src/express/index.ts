@@ -4,7 +4,7 @@ import router from '@/routes'
 import cors from 'cors';
 import { createServer } from "http";
 import UserDto from '@/dtos/user-dto';
-import cookieParser from "cookie-parser";
+// import cookieParser from "cookie-parser";
 import errorMiddleware from "@/middleware/error-middleware";
 import { readFileSync } from 'fs'
 import swaggerUi from 'swagger-ui-express'
@@ -24,7 +24,7 @@ app.use(cors({
 app.use(express.text({ type: 'text/*' }))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(cookieParser())
+// app.use(cookieParser())
 
 
 
